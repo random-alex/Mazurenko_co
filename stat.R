@@ -37,6 +37,21 @@ df %>%
   theme_bw()  +
   theme(legend.position="bottom")  
 
+nes_par <- c("|Magnetization Density|", "Energy Density", "Magnetization Density",
+             "Magnetization Density^2" ,"Magnetization Density^4","n","Staggered Magnetization Density",
+             "Staggered Magnetization Density^2", "Staggered Magnetization Density^4",
+             "Stiffness", "Susceptibility" )
+df %>% 
+  filter(parameter %in% nes_par) %>%
+  ggplot(aes(temp,value,col = as.factor(LATTICE))) +
+  geom_line() +
+  geom_pointrange(aes(ymin = value - error,ymax = value + error)) +
+  facet_wrap(c('parameter'),scales = 'free',ncol = 3) + 
+  scale_color_discrete(name = 'Тип решетки', labels = c('Нестандартная','Стандартная')) +
+  xlab('Температура, T/J') + 
+  ylab('Значение параметра') +
+  theme_bw()  +
+  theme(legend.position="bottom")  
 
 
 # cor plot ----------------------------------------------------------------
